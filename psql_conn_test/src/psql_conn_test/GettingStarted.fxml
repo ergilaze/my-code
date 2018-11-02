@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="425.0" prefWidth="850.0" style="-fx-background-radius: 22; -fx-background-color: #eaf2ff;" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psql_conn_test.FXMLController">
+<AnchorPane prefHeight="425.0" prefWidth="850.0" style="-fx-background-radius: 22; -fx-background-color: #eaf2ff;" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psql_conn_test.FXMLController">
    <children>
-      <AnchorPane fx:id="login_form1" layoutX="507.0" layoutY="109.0" prefHeight="208.0" prefWidth="209.0" visible="false">
+      <AnchorPane fx:id="login_form1" layoutX="507.0" layoutY="109.0" prefHeight="263.0" prefWidth="237.0">
          <children>
             <TextField id="gettingStarted_email_tf" fx:id="email_tf1" prefHeight="25.0" prefWidth="237.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #134259;">
                <font>
@@ -25,7 +25,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="login_btn3" layoutX="61.0" layoutY="135.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
+            <Button fx:id="login_btn3" layoutX="61.0" layoutY="135.0" mnemonicParsing="false" onAction="#logIn" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -33,7 +33,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Text fx:id="forgot_pass_txt" fill="#7c7c7c" layoutX="65.0" layoutY="199.0" onMouseClicked="#forgotPass" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-underline: true;" text="Forgot Passsword?">
+            <Text fx:id="forgot_pass_txt" fill="#7c7c7c" layoutX="65.0" layoutY="199.0" onMouseClicked="#goToforgotPass" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-underline: true;" text="Forgot Passsword?">
                <font>
                   <Font size="13.0" />
                </font>
@@ -41,6 +41,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Text>
+            <Label fx:id="logIn_lbl" layoutY="219.0" prefHeight="17.0" prefWidth="237.0" textFill="RED" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="joinUs_pane1" prefHeight="425.0" prefWidth="425.0" style="-fx-background-color: #134259; -fx-background-radius: 20 0 0 20;" visible="false">
@@ -57,7 +58,7 @@
                         <Font name="MS Outlook" size="37.0" />
                      </font>
                   </Label>
-                  <Button fx:id="singup_btn1" layoutX="95.0" layoutY="114.0" mnemonicParsing="false" onAction="#joinUs2" prefHeight="34.0" prefWidth="171.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Join Us" textFill="WHITE">
+                  <Button fx:id="singup_btn1" layoutX="95.0" layoutY="114.0" mnemonicParsing="false" onAction="#goTojoinUs2" prefHeight="34.0" prefWidth="171.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Join Us" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -68,7 +69,7 @@
                </children>
             </AnchorPane>
          </children></AnchorPane>
-      <AnchorPane fx:id="welcome_pane" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="welcome_pane" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="true">
          <children>
             <AnchorPane layoutX="117.0" layoutY="61.0" prefHeight="303.0" prefWidth="619.0">
                <children>
@@ -82,7 +83,7 @@
                         <Font name="Segoe UI Black" size="60.0" />
                      </font>
                   </Label>
-                  <Button fx:id="joinUs_btn1" layoutX="25.0" layoutY="207.0" mnemonicParsing="false" onAction="#joinUs" prefHeight="58.0" prefWidth="267.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Join Us" textFill="WHITE">
+                  <Button fx:id="joinUs_btn1" layoutX="25.0" layoutY="207.0" mnemonicParsing="false" onAction="#goTojoinUs" prefHeight="58.0" prefWidth="267.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Join Us" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -90,7 +91,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Button>
-                  <Button fx:id="login_btn1" layoutX="321.0" layoutY="207.0" mnemonicParsing="false" onAction="#logIn" prefHeight="58.0" prefWidth="267.0" style="-fx-background-color: #bcbcbc; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
+                  <Button fx:id="login_btn1" layoutX="321.0" layoutY="207.0" mnemonicParsing="false" onAction="#goTologIn" prefHeight="58.0" prefWidth="267.0" style="-fx-background-color: #bcbcbc; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -116,7 +117,7 @@
                         <Font name="MS Outlook" size="37.0" />
                      </font>
                   </Label>
-                  <Button fx:id="login_btn2" layoutX="95.0" layoutY="114.0" mnemonicParsing="false" onAction="#logIn2" prefHeight="34.0" prefWidth="171.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
+                  <Button fx:id="login_btn2" layoutX="95.0" layoutY="114.0" mnemonicParsing="false" onAction="#goTologIn2" prefHeight="34.0" prefWidth="171.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Log In" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -128,7 +129,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="signup_form1" layoutX="94.0" layoutY="83.0" visible="false">
+      <AnchorPane fx:id="signup_form1" layoutX="94.0" layoutY="83.0" prefHeight="309.0" prefWidth="237.0">
          <children>
             <TextField id="gettingStarted_email_tf" fx:id="name_tf1" prefHeight="25.0" prefWidth="237.0" promptText="Name" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #134259;">
                <font>
@@ -145,7 +146,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </TextField>
-            <Button fx:id="signUp_btn2" layoutX="61.0" layoutY="225.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
+            <Button fx:id="signUp_btn2" layoutX="61.0" layoutY="225.0" mnemonicParsing="false" onAction="#signUp" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Sign Up" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -163,6 +164,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </PasswordField>
+            <Label fx:id="signUp_lbl" layoutY="271.0" prefHeight="17.0" prefWidth="237.0" style="-fx-text-alignment: center;" textFill="#f21010" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="forgotPass_pane1" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="false">
@@ -191,7 +193,7 @@
             </AnchorPane>
             <ImageView fx:id="back_btn1" fitHeight="34.0" fitWidth="35.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#forgotPassBack" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../Downloads/134226-256.png" />
+                  <Image url="@img/arrow-left%20(1).png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />

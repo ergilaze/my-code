@@ -23,7 +23,6 @@ public class GettingStarted extends Application {
 	public void start(Stage stage) throws Exception{
 		Parent root = FXMLLoader.load(getClass().getResource("GettingStarted.fxml"));
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(GettingStarted.class.getResource("CSS/style.css").toExternalForm());
 		stage.setScene(scene);
 		scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
 		stage.initStyle(StageStyle.TRANSPARENT);
