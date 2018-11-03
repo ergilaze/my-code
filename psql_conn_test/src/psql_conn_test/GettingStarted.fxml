@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="425.0" prefWidth="850.0" style="-fx-background-radius: 22; -fx-background-color: #eaf2ff;" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psql_conn_test.FXMLController">
+<AnchorPane prefHeight="425.0" prefWidth="850.0" style="-fx-background-radius: 22; -fx-background-color: #eaf2ff;" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psql_conn_test.FXMLController">
    <children>
       <AnchorPane fx:id="login_form1" layoutX="507.0" layoutY="109.0" prefHeight="263.0" prefWidth="237.0">
          <children>
@@ -69,7 +69,7 @@
                </children>
             </AnchorPane>
          </children></AnchorPane>
-      <AnchorPane fx:id="welcome_pane" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="true">
+      <AnchorPane fx:id="welcome_pane" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="false">
          <children>
             <AnchorPane layoutX="117.0" layoutY="61.0" prefHeight="303.0" prefWidth="619.0">
                <children>
@@ -164,7 +164,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </PasswordField>
-            <Label fx:id="signUp_lbl" layoutY="271.0" prefHeight="17.0" prefWidth="237.0" style="-fx-text-alignment: center;" textFill="#f21010" />
+            <Label fx:id="signUp_lbl" layoutY="272.0" prefHeight="17.0" prefWidth="237.0" style="-fx-text-alignment: center;" textFill="#f21010" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="forgotPass_pane1" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="false">

@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.effect.BlurType;
@@ -121,6 +123,8 @@ public class FXMLController implements Initializable {
 								                                                 + "VALUES ('" + email + "', '" + password_hashed + "', '" + name + "', '" + lastname + "', '" + timestamp + "')");
 					} catch (SQLException e) {
 						System.err.println(e);
+						signup_form1.setOpacity(0.5);
+						signup_form1.setMouseTransparent(true);
 					}
 					signUp_lbl.setVisible(false);
 				} else {
@@ -202,8 +206,6 @@ public class FXMLController implements Initializable {
 					String email_db = resultSet.getString(1);
 					String pass_db = resultSet.getString(2);
 					if(BCrypt.checkpw(password, pass_db)) {
-						connection.close();
-						resultSet.close();
 						return true;
 					} else {
 						return false;
