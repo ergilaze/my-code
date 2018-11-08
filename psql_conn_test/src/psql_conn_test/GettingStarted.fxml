@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="425.0" prefWidth="850.0" style="-fx-background-radius: 22; -fx-background-color: #eaf2ff;" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psql_conn_test.FXMLController">
    <children>
-      <AnchorPane fx:id="login_form1" layoutX="507.0" layoutY="109.0" prefHeight="263.0" prefWidth="237.0">
+      <AnchorPane fx:id="login_form1" layoutX="507.0" layoutY="109.0" prefHeight="263.0" prefWidth="237.0" visible="false">
          <children>
             <TextField id="gettingStarted_email_tf" fx:id="email_tf1" prefHeight="25.0" prefWidth="237.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #134259;">
                <font>
@@ -129,7 +129,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="signup_form1" layoutX="94.0" layoutY="83.0" prefHeight="309.0" prefWidth="237.0">
+      <AnchorPane fx:id="signup_form1" layoutX="94.0" layoutY="83.0" prefHeight="309.0" prefWidth="237.0" visible="false">
          <children>
             <TextField id="gettingStarted_email_tf" fx:id="name_tf1" prefHeight="25.0" prefWidth="237.0" promptText="Name" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #134259;">
                <font>
@@ -167,8 +167,16 @@
             <Label fx:id="signUp_lbl" layoutY="272.0" prefHeight="17.0" prefWidth="237.0" style="-fx-text-alignment: center;" textFill="#f21010" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="forgotPass_pane1" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;" visible="false">
+      <AnchorPane fx:id="forgotPass_pane1" prefHeight="425.0" prefWidth="853.0" style="-fx-background-color: #134259; -fx-background-radius: 20;">
          <children>
+            <ImageView fx:id="back_btn1" fitHeight="34.0" fitWidth="35.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#forgotPassBack" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/arrow-left%20(1).png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             <AnchorPane layoutX="210.0" layoutY="78.0" prefHeight="269.0" prefWidth="434.0">
                <children>
                   <TextField id="gettingStarted_email_tf" fx:id="email_tf3" layoutX="78.0" layoutY="126.0" prefHeight="34.0" prefWidth="278.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #2ecc71; -fx-text-inner-color: #2ecc71;">
@@ -176,7 +184,7 @@
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="confirm_btn1" layoutX="144.0" layoutY="192.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Confirm" textFill="WHITE">
+                  <Button fx:id="confirm_btn1" layoutX="144.0" layoutY="192.0" mnemonicParsing="false" onAction="#forgotPass" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 20;" text="Confirm" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -189,16 +197,9 @@
                         <Font name="System Bold" size="46.0" />
                      </font>
                   </Label>
+                  <Label fx:id="forgotPass_lbl" layoutX="99.0" layoutY="238.0" prefHeight="17.0" prefWidth="237.0" textFill="RED" />
                </children>
             </AnchorPane>
-            <ImageView fx:id="back_btn1" fitHeight="34.0" fitWidth="35.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#forgotPassBack" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/arrow-left%20(1).png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
          </children>
       </AnchorPane>
    </children>

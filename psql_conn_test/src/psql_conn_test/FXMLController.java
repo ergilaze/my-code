@@ -28,7 +28,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.security.auth.login.LoginContext;
 import javax.xml.stream.events.StartDocument;
@@ -45,7 +48,7 @@ import javafx.geometry.Pos;
 public class FXMLController implements Initializable {
 	
 	@FXML
-	private Button login_btn1, joinUs_btn1, login_btn2, singup_btn1, signUp_btn2, login_btn3;
+	private Button login_btn1, joinUs_btn1, login_btn2, singup_btn1, signUp_btn2, login_btn3, confirm_btn1;
 	@FXML
 	public TextField email_tf1, pass_tf1, email_tf3, name_tf1, lastname_tf1, email_tf2, pass_tf2, confirmPass_tf1;
 	@FXML
@@ -55,11 +58,14 @@ public class FXMLController implements Initializable {
 	@FXML
 	private ImageView back_btn1;
 	@FXML
-	private Label signUp_lbl, logIn_lbl;
+	private Label signUp_lbl, logIn_lbl, forgotPass_lbl;
 
 	private DBConnection dc;
 	java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
 	public static String useremail;
+	private static final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+	private static Pattern pattern;
+	private Matcher matcher;
 	
 	
 	@FXML
@@ -107,6 +113,32 @@ public class FXMLController implements Initializable {
 	}
 	
 	@FXML
+	private void forgotPass(ActionEvent event) {
+		String email = email_tf3.getText();
+		try {
+			Connection connection = dc.Connect();
+			ResultSet rSet = null;
+			rSet = connection.createStatement().executeQuery("SELECT name FROM user_db WHERE email = '" + email + "'");
+			if (rSet.next()) {
+				forgotPass_lbl.setText("");
+				String token = getToken();
+				try {
+					ResultSet resultSet;
+					resultSet = connection.createStatement().executeQuery("UPDATE user_db SET token = '" + token + "' WHERE email = '" + email + "';");
+				} catch (SQLException e) {
+					System.err.println(e);
+				}
+					new SendEmail(email, token);
+			}
+			else {
+				forgotPass_lbl.setText("Invalid email");
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+	}
+	
+	@FXML
 	private void signUp(ActionEvent event){
 		String name = name_tf1.getText();
 		String lastname = lastname_tf1.getText();
@@ -115,29 +147,44 @@ public class FXMLController implements Initializable {
 		String password_hashed = BCrypt.hashpw(pass_tf2.getText(), BCrypt.gensalt());
 		String confirmPass = confirmPass_tf1.getText();
 		if(!name.isEmpty() && !lastname.isEmpty() && !email.isEmpty() && !password.isEmpty() && !confirmPass.isEmpty()) {
-			if(!isEmailRegistered(email)) {
-				if(password.equals(confirmPass)) {
-					try {
-						Connection connection = dc.Connect();
-						ResultSet rSet = connection.createStatement().executeQuery("INSERT INTO user_db (email, hashed_password, name, last_name, created_at) "
-								                                                 + "VALUES ('" + email + "', '" + password_hashed + "', '" + name + "', '" + lastname + "', '" + timestamp + "')");
-					} catch (SQLException e) {
-						System.err.println(e);
-						signup_form1.setOpacity(0.5);
-						signup_form1.setMouseTransparent(true);
+			if (isValidEmail(email)) {
+				if(!isEmailRegistered(email)) {
+					if(password.length() >= 6) {
+						if(password.equals(confirmPass)) {
+							try {
+								Connection connection = dc.Connect();
+								ResultSet rSet = connection.createStatement().executeQuery("INSERT INTO user_db (email, hashed_password, name, last_name, created_at) "
+										                                                 + "VALUES ('" + email + "', '" + password_hashed + "', '" + name + "', '" + lastname + "', '" + timestamp + "')");
+							} catch (SQLException e) {
+								System.err.println(e);
+							}
+							signup_form1.setOpacity(0.5);
+							signup_form1.setMouseTransparent(true);
+							signUp_lbl.setVisible(false);
+						} else {
+							signUp_lbl.setText("Passwords do not match");
+						}
+					} else {
+						signUp_lbl.setText("Password must be at least 6 characters long");
 					}
-					signUp_lbl.setVisible(false);
 				} else {
-					signUp_lbl.setText("Passwords do not match");
+					signUp_lbl.setText("This email is already registered");
 				}
 			} else {
-				signUp_lbl.setText("This email is already registered");
+				signUp_lbl.setText("Email is invalid");
 			}
 		} else {
 			signUp_lbl.setText("Please complete the missing field(s)");
 		}
 	}
 	
+	private boolean isValidEmail(String email) {
+			pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
+			matcher = pattern.matcher(email);
+			return matcher.matches();
+	}
+
+
 	@FXML
 	private void logIn(ActionEvent event) throws IOException, SQLException {
 		String email = email_tf1.getText();
@@ -174,6 +221,7 @@ public class FXMLController implements Initializable {
 		email_tf3.setFocusTraversable(false);
 		signUp_lbl.setAlignment(Pos.CENTER);
 		logIn_lbl.setAlignment(Pos.CENTER);
+		forgotPass_lbl.setAlignment(Pos.CENTER);
 	}
 
 	public boolean isEmailRegistered(String email){
@@ -203,7 +251,6 @@ public class FXMLController implements Initializable {
 			resultSet = connection.createStatement().executeQuery("SELECT email, hashed_password FROM user_db WHERE email= '" + email +"'");
 			if(resultSet != null) {
 				if(resultSet.next()) {
-					String email_db = resultSet.getString(1);
 					String pass_db = resultSet.getString(2);
 					if(BCrypt.checkpw(password, pass_db)) {
 						return true;
@@ -235,5 +282,18 @@ public class FXMLController implements Initializable {
 		}
 		return name;
 	}
+	
+	protected String getToken() {
+        String TOKENCHARS = "qwertyuioplkjhgfdsazxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder token = new StringBuilder();
+        Random rnd = new Random();
+        while (token.length() < 10) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * TOKENCHARS.length());
+            token.append(TOKENCHARS.charAt(index));
+        }
+        String tokenStr = token.toString();
+        return tokenStr;
+
+    }
 	
 }
